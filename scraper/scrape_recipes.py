@@ -17,17 +17,19 @@ def get_recipe(url):
         logging.info('OPENED %s', url)
         soup = BeautifulSoup(html.content, 'html.parser')
 
-        # title seems to come with an annoying suffix
-        name = soup.find('title').string.replace(' recipe | Epicurious.com', '').strip()
-        recipe['name'] = unidecode(name)
+        # remove annoying suffix that comes with title
+        name = soup.find('title').string.replace(' recipe | Epicurious.com', '')
+        recipe['name'] = unidecode(name.strip())
 
         recipe['url'] = url
 
-        rating = soup.find('span', class_='rating').string.strip()
-        recipe['rating'] = unidecode(rating)
+        rating = soup.find('span', class_='rating').string
+        if rating:
+            recipe['rating'] = unidecode(rating.strip())
 
-        n_ratings = soup.find('span', class_='reviews-count').string.strip()
-        recipe['n_ratings'] = unidecode(n_ratings)
+        n_ratings = soup.find('span', class_='reviews-count').string
+        if n_ratings:
+            recipe['n_ratings'] = unidecode(n_ratings.strip())
 
         # get stats if available (e.g. yield, prep time, etc.)
         for item in soup.find_all('dd', class_=True):
@@ -49,7 +51,6 @@ def get_recipe(url):
                 recipe['instructions'].append(unidecode(instruction.strip()))
     except:
         logging.error('ENCOUNTERED A PROBLEM SCRAPING %s, SKIPPING...', url)
-        return
 
     return recipe
 
@@ -66,7 +67,3 @@ recipes = [recipe for recipe in recipes
 
 with open(OUTPUT_FP, 'w') as f:
     json.dump(recipes, f)
-
-# TODO: REMOVE
-with open('data/recipes-json.log', 'w') as f:
-    json.dump(recipes, f, indent=4)
