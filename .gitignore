@@ -3,3 +3,5 @@ venv/
 .DS_Store
 *.log
 recipes.json
+legacy/
+yummly-dataset/
