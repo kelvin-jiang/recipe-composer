@@ -20,9 +20,8 @@ ingredients_dataset = set(YUMMLY_MISSING)
 lemmatizer = WordNetLemmatizer()
 recipe_ingredients = {}
 
-logging.info('LOADING YUMMLY DATASET (+ MORE)...')
-
 # load and normalize ingredients from yummly dataset
+logging.info('LOADING YUMMLY DATASET (+ MORE)...')
 for fp in YUMMLY_FPS:
     with open(fp, 'r') as f:
         yummly_json = json.load(f)
@@ -39,7 +38,6 @@ for fp in YUMMLY_FPS:
 
             if full_ingredient:
                 ingredients_dataset.add(full_ingredient)
-
 logging.info('LOADING COMPLETE. NUMBER OF INGREDIENTS: %d', len(ingredients_dataset))
 
 # find best ingredient candidate for ingredients in recipes
