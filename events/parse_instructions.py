@@ -8,8 +8,10 @@ RECIPES_FP = '../recipes.json'
 INSTRUCTIONS_FOLDER_FP = 'data/instructions'
 PARSED_FOLDER_FP = 'data/parsed'
 
+logging.info('LOADING RECIPES...')
 with open(RECIPES_FP, 'r') as f:
     recipes = json.load(f)
+logging.info('LOADING COMPLETE.')
 
 for i, recipe in enumerate(recipes):
     instructions_str = ' '.join(recipe['instructions'])

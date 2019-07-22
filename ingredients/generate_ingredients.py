@@ -41,8 +41,10 @@ for fp in YUMMLY_FPS:
 logging.info('LOADING COMPLETE. NUMBER OF INGREDIENTS: %d', len(ingredients_dataset))
 
 # find best ingredient candidate for ingredients in recipes
+logging.info('LOADING RECIPES...')
 with open(RECIPES_FP, 'r') as f:
     recipes = json.load(f)
+logging.info('LOADING COMPLETE.')
 
 for recipe in recipes:
     ingredients = []
